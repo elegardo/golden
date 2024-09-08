@@ -1,4 +1,5 @@
-package engine
+// Package engine provides structs, functions and interfaces for rule engine
+package core
 
 import (
 	"sync"

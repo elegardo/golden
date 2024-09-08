@@ -1,4 +1,4 @@
-package engine
+package core
 
 type Rule struct {
 	Id          any

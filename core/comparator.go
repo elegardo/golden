@@ -1,4 +1,4 @@
-package engine
+package core
 
 type Comparator[T comparable] struct {
 	Value T

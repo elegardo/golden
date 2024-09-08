@@ -2,16 +2,18 @@ package engine
 
 import (
 	"fmt"
+
+	. "github.com/elegardo/golden/core"
 )
 
-func ExampleEngine_Run_gateAllOperatorCo1() {
-	var ruleEngine = NewRuleEngine()
+func ExampleNewEngine_gateAllOperatorCo1() {
+	var engine = NewEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",
 		"points":  99,
 	}
-	ruleEngine.Given([]Rule{
+	engine.Given([]Rule{
 		{
 			Event: Event{text: "Event 1"},
 			Conditions: []Condition{
@@ -45,14 +47,14 @@ func ExampleEngine_Run_gateAllOperatorCo1() {
 	// Event 1
 }
 
-func ExampleEngine_Run_gateAllOperatorCo2() {
-	var ruleEngine = NewRuleEngine()
+func ExampleNewEngine_gateAllOperatorCo2() {
+	var engine = NewEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",
 		"points":  99,
 	}
-	ruleEngine.Given([]Rule{
+	engine.Given([]Rule{
 		{
 			Event: Event{order: 1, text: "Event 1"},
 			Conditions: []Condition{
@@ -112,14 +114,14 @@ func ExampleEngine_Run_gateAllOperatorCo2() {
 	// Event 2
 }
 
-func ExampleEngine_Run_gateAllOperatorCo3() {
-	var ruleEngine = NewRuleEngine()
+func ExampleNewEngine_gateAllOperatorCo3() {
+	var engine = NewEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",
 		"points":  99,
 	}
-	ruleEngine.Given([]Rule{
+	engine.Given([]Rule{
 		{
 			Event: Event{order: 1, text: "Event 1"},
 			Conditions: []Condition{
@@ -178,12 +180,12 @@ func ExampleEngine_Run_gateAllOperatorCo3() {
 	// Event 2
 }
 
-func ExampleEngine_Run_gateAllOperatorCo4() {
-	var ruleEngine = NewRuleEngine()
+func ExampleNewEngine_gateAllOperatorCo4() {
+	var engine = NewEngine()
 	facts := map[string]any{
 		"lang": "pt",
 	}
-	ruleEngine.Given([]Rule{
+	engine.Given([]Rule{
 		{
 			Event: Event{order: 1, text: "Event 1"},
 			Conditions: []Condition{
@@ -207,12 +209,12 @@ func ExampleEngine_Run_gateAllOperatorCo4() {
 	// Event 1
 }
 
-func ExampleEngine_Run_gateAllOperatorCo5() {
-	var ruleEngine = NewRuleEngine()
+func ExampleNewEngine_gateAllOperatorCo5() {
+	var engine = NewEngine()
 	facts := map[string]any{
 		"lang": "pt",
 	}
-	ruleEngine.Given([]Rule{
+	engine.Given([]Rule{
 		{
 			Event: Event{order: 1, text: "Event 1"},
 			Conditions: []Condition{

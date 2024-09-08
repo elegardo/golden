@@ -1,4 +1,4 @@
-package engine
+package core
 
 type RuleEvaluator struct {
 	Evaluator Evaluable

@@ -2,6 +2,9 @@ package engine
 
 import (
 	"testing"
+
+	. "github.com/elegardo/golden/core"
+	. "github.com/elegardo/golden/engine"
 )
 
 type event struct {
@@ -107,7 +110,7 @@ var rules = []Rule{
 func BenchmarkRuleEngine(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		// Inicializar el RuleEngine
-		var ruleEngine = NewRuleEngine()
+		var ruleEngine = NewEngine()
 		facts := map[string]any{
 			"age":     30,
 			"name":    "John",

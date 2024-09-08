@@ -2,16 +2,18 @@ package engine
 
 import (
 	"fmt"
+
+	. "github.com/elegardo/golden/core"
 )
 
-func ExampleEngine_Run_gateAllOperatorEq1() {
-	ruleEngine := NewRuleEngine()
+func ExampleNewEngine_gateAllOperatorEq1() {
+	engine := NewEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",
 		"isHuman": true,
 	}
-	ruleEngine.Given([]Rule{
+	engine.Given([]Rule{
 		{
 			Event: Event{text: "Event 1"},
 			Conditions: []Condition{
@@ -45,14 +47,14 @@ func ExampleEngine_Run_gateAllOperatorEq1() {
 	// Event 1
 }
 
-func ExampleEngine_Run_gateAllOperatorEq2() {
-	ruleEngine := NewRuleEngine()
+func ExampleNewEngine_gateAllOperatorEq2() {
+	engine := NewEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",
 		"isHuman": true,
 	}
-	ruleEngine.Given([]Rule{
+	engine.Given([]Rule{
 		{
 			Event: Event{order: 1, text: "Event 1"},
 			Conditions: []Condition{
@@ -102,14 +104,14 @@ func ExampleEngine_Run_gateAllOperatorEq2() {
 	// Event 2
 }
 
-func ExampleEngine_Run_gateAllOperatorEq3() {
-	ruleEngine := NewRuleEngine()
+func ExampleNewEngine_gateAllOperatorEq3() {
+	engine := NewEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",
 		"isHuman": true,
 	}
-	ruleEngine.Given([]Rule{
+	engine.Given([]Rule{
 		{
 			Event: Event{text: "Event 1"},
 			Conditions: []Condition{
@@ -163,14 +165,14 @@ func ExampleEngine_Run_gateAllOperatorEq3() {
 	// Event 2
 }
 
-func ExampleEngine_Run_gateAllOperatorEq4() {
-	ruleEngine := NewRuleEngine()
+func ExampleNewEngine_gateAllOperatorEq4() {
+	engine := NewEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",
 		"isHuman": true,
 	}
-	ruleEngine.Given([]Rule{
+	engine.Given([]Rule{
 		{
 			Event: Event{text: "Event 1"},
 			Conditions: []Condition{
@@ -194,14 +196,14 @@ func ExampleEngine_Run_gateAllOperatorEq4() {
 	// Event 1
 }
 
-func ExampleEngine_Run_gateAllOperatorEq5() {
-	ruleEngine := NewRuleEngine()
+func ExampleNewEngine_gateAllOperatorEq5() {
+	engine := NewEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",
 		"isHuman": true,
 	}
-	ruleEngine.Given([]Rule{
+	engine.Given([]Rule{
 		{
 			Event: Event{text: "Event 1"},
 			Conditions: []Condition{
@@ -224,14 +226,14 @@ func ExampleEngine_Run_gateAllOperatorEq5() {
 	// Output:
 }
 
-func ExampleEngine_Run_gateAllOperatorEq6() {
-	ruleEngine := NewRuleEngine()
+func ExampleNewEngine_gateAllOperatorEq6() {
+	engine := NewEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",
 		"isHuman": true,
 	}
-	ruleEngine.Given([]Rule{
+	engine.Given([]Rule{
 		{
 			Event: Event{text: "Event 1"},
 			Conditions: []Condition{

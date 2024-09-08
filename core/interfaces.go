@@ -1,4 +1,4 @@
-package engine
+package core
 
 type Comparable interface {
 	Compare(Comparable) int
