@@ -32,6 +32,7 @@ type Engine struct {
 //
 //	var engine = NewEngine()
 //	engine.Given(rules).Run(facts, callback)
+
 func (re *Engine) Given(rules []domain.Rule) *Engine {
 	re.rules = rules
 	return re
@@ -50,6 +51,7 @@ func (re *Engine) Given(rules []domain.Rule) *Engine {
 //	engine.Given(rules)
 //	...
 //	engine.Run(facts, callback)
+
 func (re *Engine) Run(facts map[string]any, callback domain.Callback) {
 	queue := make(chan value, len(re.rules))
 
