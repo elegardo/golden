@@ -1,17 +1,22 @@
 package core
 
-import "reflect"
+import (
+	"reflect"
+
+	"github.com/elegardo/golden/core/domain"
+	"github.com/elegardo/golden/core/interfaces"
+)
 
 type Evaluator struct {
 }
 
-func (e *Evaluator) Evaluate(operator *Operator, fact, value any) bool {
+func (e *Evaluator) Evaluate(operator *domain.Operator, fact, value any) bool {
 	switch *operator {
-	case CO:
+	case domain.CO:
 		a := Container[any]{Value: value}
 		b := Container[any]{Value: fact}
 		return a.Contains(b)
-	case NC:
+	case domain.NC:
 		a := Container[any]{Value: value}
 		b := Container[any]{Value: fact}
 		return !a.Contains(b)
@@ -24,19 +29,19 @@ func (e *Evaluator) Evaluate(operator *Operator, fact, value any) bool {
 	}
 }
 
-func (e *Evaluator) compare(operator *Operator, fact, value Comparable) bool {
+func (e *Evaluator) compare(operator *domain.Operator, fact, value interfaces.Comparable) bool {
 	switch *operator {
-	case EQ:
+	case domain.EQ:
 		return fact.Compare(value) == 0
-	case NE:
+	case domain.NE:
 		return fact.Compare(value) != 0
-	case GT:
+	case domain.GT:
 		return fact.Compare(value) > 0
-	case GE:
+	case domain.GE:
 		return fact.Compare(value) >= 0
-	case LT:
+	case domain.LT:
 		return fact.Compare(value) < 0
-	case LE:
+	case domain.LE:
 		return fact.Compare(value) <= 0
 	default:
 		panic("unsupported comparator")

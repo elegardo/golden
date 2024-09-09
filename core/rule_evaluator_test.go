@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"reflect"
 	"testing"
+
+	. "github.com/elegardo/golden/core/domain"
 )
 
 type MockEvaluator struct {

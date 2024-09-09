@@ -3,7 +3,7 @@ package engine
 import (
 	"fmt"
 
-	. "github.com/elegardo/golden/core"
+	. "github.com/elegardo/golden/core/domain"
 )
 
 func ExampleNewEngine_gateAllOperatorEq1() {

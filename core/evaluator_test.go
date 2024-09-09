@@ -2,6 +2,8 @@ package core
 
 import (
 	"testing"
+
+	. "github.com/elegardo/golden/core/domain"
 )
 
 func TestEvaluator_Evaluate(t *testing.T) {
