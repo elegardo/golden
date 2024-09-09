@@ -18,8 +18,7 @@ type Comparator[T comparable] struct {
 //
 //	number1  := Comparator[any]{Value: 10}
 //	number2  := Comparator[any]{Value: 10}
-//	apple.Compare(banana) // true
-
+//	number1.Compare(number2) // true
 func (fact Comparator[T]) Compare(value interfaces.Comparable) int {
 	v := value.(Comparator[T]).Value
 	switch f := any(fact.Value).(type) {
