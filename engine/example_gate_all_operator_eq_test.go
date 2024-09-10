@@ -3,11 +3,11 @@ package engine
 import (
 	"fmt"
 
-	. "github.com/elegardo/golden/core/domain"
+	. "github.com/elegardo/golden/core/models"
 )
 
-func ExampleNewEngine_gateAllOperatorEq1() {
-	engine := NewEngine()
+func ExampleNewAsyncEngine_gateAllOperatorEq1() {
+	engine := NewAsyncEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",
@@ -47,8 +47,8 @@ func ExampleNewEngine_gateAllOperatorEq1() {
 	// Event 1
 }
 
-func ExampleNewEngine_gateAllOperatorEq2() {
-	engine := NewEngine()
+func ExampleNewAsyncEngine_gateAllOperatorEq2() {
+	engine := NewAsyncEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",
@@ -104,8 +104,8 @@ func ExampleNewEngine_gateAllOperatorEq2() {
 	// Event 2
 }
 
-func ExampleNewEngine_gateAllOperatorEq3() {
-	engine := NewEngine()
+func ExampleNewAsyncEngine_gateAllOperatorEq3() {
+	engine := NewAsyncEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",
@@ -165,8 +165,8 @@ func ExampleNewEngine_gateAllOperatorEq3() {
 	// Event 2
 }
 
-func ExampleNewEngine_gateAllOperatorEq4() {
-	engine := NewEngine()
+func ExampleNewAsyncEngine_gateAllOperatorEq4() {
+	engine := NewAsyncEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",
@@ -196,8 +196,8 @@ func ExampleNewEngine_gateAllOperatorEq4() {
 	// Event 1
 }
 
-func ExampleNewEngine_gateAllOperatorEq5() {
-	engine := NewEngine()
+func ExampleNewAsyncEngine_gateAllOperatorEq5() {
+	engine := NewAsyncEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",
@@ -226,8 +226,8 @@ func ExampleNewEngine_gateAllOperatorEq5() {
 	// Output:
 }
 
-func ExampleNewEngine_gateAllOperatorEq6() {
-	engine := NewEngine()
+func ExampleNewAsyncEngine_gateAllOperatorEq6() {
+	engine := NewAsyncEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",

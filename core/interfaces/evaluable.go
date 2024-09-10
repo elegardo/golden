@@ -1,7 +1,7 @@
 package interfaces
 
-import "github.com/elegardo/golden/core/domain"
+import "github.com/elegardo/golden/core/models"
 
 type Evaluable interface {
-	Evaluate(operator *domain.Operator, fact, value any) bool
+	Evaluate(operator *models.Operator, fact, value any) bool
 }

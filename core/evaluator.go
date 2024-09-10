@@ -3,20 +3,20 @@ package core
 import (
 	"reflect"
 
-	"github.com/elegardo/golden/core/domain"
 	"github.com/elegardo/golden/core/interfaces"
+	"github.com/elegardo/golden/core/models"
 )
 
 type Evaluator struct {
 }
 
-func (e *Evaluator) Evaluate(operator *domain.Operator, fact, value any) bool {
+func (e *Evaluator) Evaluate(operator *models.Operator, fact, value any) bool {
 	switch *operator {
-	case domain.CO:
+	case models.CO:
 		a := Container[any]{Value: value}
 		b := Container[any]{Value: fact}
 		return a.Contains(b)
-	case domain.NC:
+	case models.NC:
 		a := Container[any]{Value: value}
 		b := Container[any]{Value: fact}
 		return !a.Contains(b)
@@ -29,19 +29,19 @@ func (e *Evaluator) Evaluate(operator *domain.Operator, fact, value any) bool {
 	}
 }
 
-func (e *Evaluator) compare(operator *domain.Operator, fact, value interfaces.Comparable) bool {
+func (e *Evaluator) compare(operator *models.Operator, fact, value interfaces.Comparable) bool {
 	switch *operator {
-	case domain.EQ:
+	case models.EQ:
 		return fact.Compare(value) == 0
-	case domain.NE:
+	case models.NE:
 		return fact.Compare(value) != 0
-	case domain.GT:
+	case models.GT:
 		return fact.Compare(value) > 0
-	case domain.GE:
+	case models.GE:
 		return fact.Compare(value) >= 0
-	case domain.LT:
+	case models.LT:
 		return fact.Compare(value) < 0
-	case domain.LE:
+	case models.LE:
 		return fact.Compare(value) <= 0
 	default:
 		panic("unsupported comparator")

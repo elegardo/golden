@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	. "github.com/elegardo/golden/core/domain"
+	. "github.com/elegardo/golden/core/models"
 )
 
 type MockEvaluator struct {

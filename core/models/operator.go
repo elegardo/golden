@@ -1,4 +1,4 @@
-package domain
+package models
 
 // Logical Operators
 // eq	Equal

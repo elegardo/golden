@@ -3,7 +3,7 @@ package engine
 import (
 	"testing"
 
-	. "github.com/elegardo/golden/core/domain"
+	. "github.com/elegardo/golden/core/models"
 	. "github.com/elegardo/golden/engine"
 )
 

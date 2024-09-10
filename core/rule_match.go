@@ -1,12 +1,12 @@
 package core
 
-import "github.com/elegardo/golden/core/domain"
+import "github.com/elegardo/golden/core/models"
 
 type RuleMatch struct {
 	RuleEvaluator *RuleEvaluator
 }
 
-func (rm *RuleMatch) AllTrue(main chan<- bool, facts map[string]any, conditionals *[]domain.Conditional) {
+func (rm *RuleMatch) AllTrue(main chan<- bool, facts map[string]any, conditionals *[]models.Conditional) {
 	ch := make(chan bool)
 	go rm.RuleEvaluator.Execute(ch, facts, conditionals)
 
@@ -23,7 +23,7 @@ func (rm *RuleMatch) AllTrue(main chan<- bool, facts map[string]any, conditional
 	main <- allTrue
 }
 
-func (rm *RuleMatch) AnyTrue(main chan<- bool, facts map[string]any, conditionals *[]domain.Conditional) {
+func (rm *RuleMatch) AnyTrue(main chan<- bool, facts map[string]any, conditionals *[]models.Conditional) {
 	ch := make(chan bool)
 	go rm.RuleEvaluator.Execute(ch, facts, conditionals)
 
@@ -38,7 +38,7 @@ func (rm *RuleMatch) AnyTrue(main chan<- bool, facts map[string]any, conditional
 	main <- anyTrue
 }
 
-func (rm *RuleMatch) NoneTrue(main chan<- bool, facts map[string]any, conditionals *[]domain.Conditional) {
+func (rm *RuleMatch) NoneTrue(main chan<- bool, facts map[string]any, conditionals *[]models.Conditional) {
 	ch := make(chan bool)
 	go rm.RuleEvaluator.Execute(ch, facts, conditionals)
 

@@ -3,11 +3,11 @@ package engine
 import (
 	"fmt"
 
-	. "github.com/elegardo/golden/core/domain"
+	. "github.com/elegardo/golden/core/models"
 )
 
-func ExampleNewEngine_gateAllOperatorCo1() {
-	var engine = NewEngine()
+func ExampleNewAsyncEngine_gateAllOperatorCo1() {
+	var engine = NewAsyncEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",
@@ -47,8 +47,8 @@ func ExampleNewEngine_gateAllOperatorCo1() {
 	// Event 1
 }
 
-func ExampleNewEngine_gateAllOperatorCo2() {
-	var engine = NewEngine()
+func ExampleNewAsyncEngine_gateAllOperatorCo2() {
+	var engine = NewAsyncEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",
@@ -114,8 +114,8 @@ func ExampleNewEngine_gateAllOperatorCo2() {
 	// Event 2
 }
 
-func ExampleNewEngine_gateAllOperatorCo3() {
-	var engine = NewEngine()
+func ExampleNewAsyncEngine_gateAllOperatorCo3() {
+	var engine = NewAsyncEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",
@@ -180,8 +180,8 @@ func ExampleNewEngine_gateAllOperatorCo3() {
 	// Event 2
 }
 
-func ExampleNewEngine_gateAllOperatorCo4() {
-	var engine = NewEngine()
+func ExampleNewAsyncEngine_gateAllOperatorCo4() {
+	var engine = NewAsyncEngine()
 	facts := map[string]any{
 		"lang": "pt",
 	}
@@ -209,8 +209,8 @@ func ExampleNewEngine_gateAllOperatorCo4() {
 	// Event 1
 }
 
-func ExampleNewEngine_gateAllOperatorCo5() {
-	var engine = NewEngine()
+func ExampleNewAsyncEngine_gateAllOperatorCo5() {
+	var engine = NewAsyncEngine()
 	facts := map[string]any{
 		"lang": "pt",
 	}

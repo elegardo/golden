@@ -1,15 +1,15 @@
 package core
 
 import (
-	"github.com/elegardo/golden/core/domain"
 	"github.com/elegardo/golden/core/interfaces"
+	"github.com/elegardo/golden/core/models"
 )
 
 type RuleEvaluator struct {
 	Evaluator interfaces.Evaluable
 }
 
-func (re *RuleEvaluator) Execute(ch chan<- bool, facts map[string]any, conditionals *[]domain.Conditional) {
+func (re *RuleEvaluator) Execute(ch chan<- bool, facts map[string]any, conditionals *[]models.Conditional) {
 	for _, conditional := range *conditionals {
 		if fact, exists := facts[conditional.Fact]; exists {
 			ch <- re.evaluate(&conditional.Operator, fact, conditional.Value)
@@ -18,6 +18,6 @@ func (re *RuleEvaluator) Execute(ch chan<- bool, facts map[string]any, condition
 	close(ch)
 }
 
-func (re *RuleEvaluator) evaluate(operator *domain.Operator, fact, value any) bool {
+func (re *RuleEvaluator) evaluate(operator *models.Operator, fact, value any) bool {
 	return re.Evaluator.Evaluate(operator, fact, value)
 }

@@ -3,7 +3,7 @@ package core
 import (
 	"testing"
 
-	. "github.com/elegardo/golden/core/domain"
+	. "github.com/elegardo/golden/core/models"
 )
 
 func TestEvaluator_Evaluate(t *testing.T) {
