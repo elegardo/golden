@@ -1,8 +1,9 @@
 package models
 
 type Rule struct {
-	Id          any
-	Description string
-	Event       Emmiter
-	Conditions  []Condition
+	Id         any
+	Priority   int
+	Name       string
+	Event      Emmiter
+	Conditions []Condition
 }

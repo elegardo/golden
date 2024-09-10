@@ -10,6 +10,7 @@ import (
 type Evaluator struct {
 }
 
+// TODO: analizar el uso de "contains" solo para arrays y de "in" para strings
 func (e *Evaluator) Evaluate(operator *models.Operator, fact, value any) bool {
 	switch *operator {
 	case models.CO:
@@ -22,6 +23,7 @@ func (e *Evaluator) Evaluate(operator *models.Operator, fact, value any) bool {
 		return !a.Contains(b)
 	default:
 		// different types cannot be compared
+		// TODO: print warning
 		if reflect.TypeOf(fact) != reflect.TypeOf(value) {
 			return false
 		}

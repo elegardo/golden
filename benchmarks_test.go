@@ -22,9 +22,9 @@ func (e event) Order() int {
 
 var rules = []Rule{
 	{
-		Id:          1,
-		Description: "Name is John and Age is greater than 25",
-		Event:       event{text: "Event 1"},
+		Id:    1,
+		Name:  "Name is John and Age is greater than 25",
+		Event: event{text: "Event 1"},
 		Conditions: []Condition{
 			{
 				Gate: ALL,
@@ -69,9 +69,9 @@ var rules = []Rule{
 		},
 	},
 	{
-		Id:          2,
-		Description: "Name is John and Age is greater than 25",
-		Event:       event{text: "Event 2"},
+		Id:    2,
+		Name:  "Name is John and Age is greater than 25",
+		Event: event{text: "Event 2"},
 		Conditions: []Condition{
 			{
 				Gate: ALL,
@@ -110,7 +110,7 @@ var rules = []Rule{
 func BenchmarkRuleEngine(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		// Inicializar el RuleEngine
-		var ruleEngine = NewEngine()
+		var ruleEngine = NewAsyncEngine()
 		facts := map[string]any{
 			"age":     30,
 			"name":    "John",

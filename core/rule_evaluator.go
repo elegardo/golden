@@ -15,6 +15,7 @@ func (re *RuleEvaluator) Execute(ch chan<- bool, facts map[string]any, condition
 			ch <- re.evaluate(&conditional.Operator, fact, conditional.Value)
 		}
 	}
+	//TODO: cerrar channel en un nivel superior (buena práctica)
 	close(ch)
 }
 

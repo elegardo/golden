@@ -2,23 +2,22 @@ package core
 
 import "github.com/elegardo/golden/core/interfaces"
 
-// Estructura que permite comparar 2 valores, un "fact" y un "value" de una regla
+// Permite comparar 2 valores del tipo Comparator. El generico [T comparable] puede ser de cualquier tipo
 type Comparator[T comparable] struct {
 	Value T
 }
 
-// La función permite comparar 2 valores. Por ejemplo:
+// Por ejemplo:
 //
-//	apple  := Comparator[any]{Value: "apple"}
-//	banana := Comparator[any]{Value: "banana"}
-//	apple.Compare(banana) // false
+//	fact  := Comparator[any]{Value: "apple"}
+//	value := Comparator[any]{Value: "banana"}
+//	fact.Compare(value) // false
 //
-// El valor de "result" es false.
-// Los valores deben ser del mismo tipo:
+// Los valores pueden ser de cualquier tipo, pero deben ser del mismo tipo:
 //
-//	number1  := Comparator[any]{Value: 10}
-//	number2  := Comparator[any]{Value: 10}
-//	number1.Compare(number2) // true
+//	fact  := Comparator[any]{Value: 10}
+//	value := Comparator[any]{Value: 10}
+//	fact.Compare(value) // true
 func (fact Comparator[T]) Compare(value interfaces.Comparable) int {
 	v := value.(Comparator[T]).Value
 	switch f := any(fact.Value).(type) {

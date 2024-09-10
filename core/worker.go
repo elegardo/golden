@@ -13,6 +13,10 @@ type Worker struct {
 	Match interfaces.Matchable
 }
 
+// TODO: priorizar ejecución de Gates en el siguiente orden: ALL, NONE, ANY.
+// Lo anterior permite descartar mas rapido un false,
+// TODO: retornar lo mas pronto posible el false y terminar la ejecución y
+// no esperar terminar de evaluar todas las conditions.
 func (w *Worker) Execute(rule *models.Rule, facts map[string]any) bool {
 	group := sync.WaitGroup{}
 	main := make(chan bool)
