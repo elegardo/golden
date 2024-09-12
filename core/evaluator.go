@@ -2,6 +2,7 @@ package core
 
 import (
 	"reflect"
+	"strings"
 
 	"github.com/elegardo/golden/core/interfaces"
 	"github.com/elegardo/golden/core/models"
@@ -10,7 +11,6 @@ import (
 type Evaluator struct {
 }
 
-// TODO: analizar el uso de "contains" solo para arrays y de "in" para strings
 func (e *Evaluator) Evaluate(operator *models.Operator, fact, value any) bool {
 	switch *operator {
 	case models.CO:
@@ -21,6 +21,18 @@ func (e *Evaluator) Evaluate(operator *models.Operator, fact, value any) bool {
 		a := Container[any]{Value: value}
 		b := Container[any]{Value: fact}
 		return !a.Contains(b)
+	case models.IN:
+		// TODO: print warning
+		if theyAreNotString(fact, value) {
+			return false
+		}
+		return strings.Contains(any(fact).(string), any(value).(string))
+	case models.NI:
+		// TODO: print warning
+		if theyAreNotString(fact, value) {
+			return false
+		}
+		return !strings.Contains(any(fact).(string), any(value).(string))
 	default:
 		// different types cannot be compared
 		// TODO: print warning
@@ -48,4 +60,8 @@ func (e *Evaluator) compare(operator *models.Operator, fact, value interfaces.Co
 	default:
 		panic("unsupported comparator")
 	}
+}
+
+func theyAreNotString(fact, value any) bool {
+	return reflect.TypeOf(fact).String() != "string" || reflect.TypeOf(value).String() != "string"
 }

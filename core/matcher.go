@@ -9,23 +9,10 @@ type Matcher struct {
 	Evaluator interfaces.Evaluable
 }
 
-// TODO: Para ALL y NONE retornar lo mas pronto posible el false y terminar la ejecución y
-// no esperar terminar de evaluar todas las conditions.
 func (rm *Matcher) AllTrue(facts map[string]any, conditionals *[]models.Conditional) bool {
 	ch := make(chan bool, len(*conditionals))
 
-	go func() {
-		for _, conditional := range *conditionals {
-			if fact, exists := facts[conditional.Fact]; exists {
-				if !rm.Evaluator.Evaluate(&conditional.Operator, fact, conditional.Value) {
-					ch <- false
-					break
-				}
-				ch <- true
-			}
-		}
-		close(ch)
-	}()
+	go rm.evaluate(ch, facts, conditionals)
 
 	allTrue := false
 	for result := range ch {
@@ -43,14 +30,7 @@ func (rm *Matcher) AllTrue(facts map[string]any, conditionals *[]models.Conditio
 func (rm *Matcher) AnyTrue(facts map[string]any, conditionals *[]models.Conditional) bool {
 	ch := make(chan bool, len(*conditionals))
 
-	go func() {
-		for _, conditional := range *conditionals {
-			if fact, exists := facts[conditional.Fact]; exists {
-				ch <- rm.Evaluator.Evaluate(&conditional.Operator, fact, conditional.Value)
-			}
-		}
-		close(ch)
-	}()
+	go rm.evaluate(ch, facts, conditionals)
 
 	anyTrue := false
 	for result := range ch {
@@ -66,13 +46,7 @@ func (rm *Matcher) AnyTrue(facts map[string]any, conditionals *[]models.Conditio
 func (rm *Matcher) NoneTrue(facts map[string]any, conditionals *[]models.Conditional) bool {
 	ch := make(chan bool, len(*conditionals))
 
-	for _, conditional := range *conditionals {
-		if fact, exists := facts[conditional.Fact]; exists {
-			ch <- rm.Evaluator.Evaluate(&conditional.Operator, fact, conditional.Value)
-		}
-	}
-
-	close(ch)
+	go rm.evaluate(ch, facts, conditionals)
 
 	noneTrue := false
 	for result := range ch {
@@ -85,4 +59,13 @@ func (rm *Matcher) NoneTrue(facts map[string]any, conditionals *[]models.Conditi
 	}
 
 	return noneTrue
+}
+
+func (rm *Matcher) evaluate(ch chan bool, facts map[string]any, conditionals *[]models.Conditional) {
+	for _, conditional := range *conditionals {
+		if fact, exists := facts[conditional.Fact]; exists {
+			ch <- rm.Evaluator.Evaluate(&conditional.Operator, fact, conditional.Value)
+		}
+	}
+	close(ch)
 }

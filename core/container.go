@@ -2,7 +2,6 @@ package core
 
 import (
 	"slices"
-	"strings"
 
 	"github.com/elegardo/golden/core/interfaces"
 )
@@ -14,8 +13,6 @@ type Container[T comparable] struct {
 func (value Container[T]) Contains(fact interfaces.Containable) bool {
 	y := fact.(Container[T])
 	switch x := any(value.Value).(type) {
-	case string:
-		return strings.Contains(x, any(y.Value).(string))
 	case interface{}:
 		switch array := x.(type) {
 		case []string:

@@ -73,7 +73,7 @@ func TestEvaluator_Evaluate(t *testing.T) {
 			name: "Contains comparator",
 			fact: "test",
 			conditional: Conditional{
-				Operator: CO,
+				Operator: IN,
 				Value:    "test",
 			},
 			expected: true,

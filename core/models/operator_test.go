@@ -17,6 +17,8 @@ func TestOperator_String(t *testing.T) {
 		{LE, "le"},
 		{CO, "co"},
 		{NC, "nc"},
+		{IN, "in"},
+		{NI, "ni"},
 	}
 
 	for _, tt := range tests {
