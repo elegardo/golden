@@ -10,32 +10,30 @@ import (
 const one = 1
 
 type Worker struct {
-	Match interfaces.Matchable
+	Matcher interfaces.Matchable
 }
 
 // TODO: priorizar ejecución de Gates en el siguiente orden: ALL, NONE, ANY.
 // Lo anterior permite descartar mas rapido un false,
-// TODO: retornar lo mas pronto posible el false y terminar la ejecución y
-// no esperar terminar de evaluar todas las conditions.
 func (w *Worker) Execute(rule *models.Rule, facts map[string]any) bool {
 	group := sync.WaitGroup{}
-	main := make(chan bool)
+	ch := make(chan bool, len(rule.Conditions))
 
 	for _, condition := range rule.Conditions {
 		group.Add(one)
 		go func(gate *models.Gate, conditionals *[]models.Conditional) {
 			defer group.Done()
-			w.evaluate(gate, main, facts, conditionals)
+			ch <- w.evaluate(gate, facts, conditionals)
 		}(&condition.Gate, &condition.Conditionals)
 	}
 
 	go func() {
 		group.Wait()
-		close(main)
+		close(ch)
 	}()
 
 	allTrue := false
-	for result := range main {
+	for result := range ch {
 		if result {
 			allTrue = true
 		} else {
@@ -47,13 +45,15 @@ func (w *Worker) Execute(rule *models.Rule, facts map[string]any) bool {
 	return allTrue
 }
 
-func (re *Worker) evaluate(gate *models.Gate, main chan<- bool, facts map[string]any, conditionals *[]models.Conditional) {
+func (re *Worker) evaluate(gate *models.Gate, facts map[string]any, conditionals *[]models.Conditional) bool {
 	switch *gate {
 	case models.ALL:
-		re.Match.AllTrue(main, facts, conditionals)
+		return re.Matcher.AllTrue(facts, conditionals)
 	case models.ANY:
-		re.Match.AnyTrue(main, facts, conditionals)
+		return re.Matcher.AnyTrue(facts, conditionals)
 	case models.NONE:
-		re.Match.NoneTrue(main, facts, conditionals)
+		return re.Matcher.NoneTrue(facts, conditionals)
+	default:
+		return false
 	}
 }

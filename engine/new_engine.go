@@ -10,10 +10,8 @@ import (
 
 func worker() interfaces.Workereable {
 	return &core.Worker{
-		Match: &core.RuleMatch{
-			RuleEvaluator: &core.RuleEvaluator{
-				Evaluator: &core.Evaluator{},
-			},
+		Matcher: &core.Matcher{
+			Evaluator: &core.Evaluator{},
 		},
 	}
 }

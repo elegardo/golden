@@ -108,18 +108,14 @@ var rules = []Rule{
 }
 
 func BenchmarkRuleEngine(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		// Inicializar el RuleEngine
-		var ruleEngine = NewAsyncEngine()
-		facts := map[string]any{
-			"age":     30,
-			"name":    "John",
-			"country": "cl",
-			"lang":    "es",
-		}
-		ruleEngine.Given(rules).When(facts).Run(some)
+	var engine = NewAsyncEngine()
+	facts := map[string]any{
+		"age":     30,
+		"name":    "John",
+		"country": "cl",
+		"lang":    "es",
 	}
-}
-
-func some(event Emmiter) {
+	for i := 0; i < b.N; i++ {
+		engine.Given(rules).When(facts).Run(func(emmiter Emmiter) {})
+	}
 }
