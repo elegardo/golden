@@ -5,7 +5,7 @@ import (
 	"github.com/elegardo/golden/core/models"
 )
 
-type asyncValue struct {
+type value struct {
 	trigger bool
 	emmiter models.Emmiter
 }
@@ -13,22 +13,28 @@ type asyncValue struct {
 type AsyncEngine struct {
 	Worker interfaces.Workereable
 	rules  []models.Rule
+	facts  map[string]any
 }
 
-func (re *AsyncEngine) Given(rules []models.Rule) interfaces.Engineable {
+func (re *AsyncEngine) Given(rules []models.Rule) interfaces.Engine {
 	re.rules = rules
 	return re
 }
 
-func (re *AsyncEngine) Run(facts map[string]any, callback models.Callback) {
-	queue := make(chan asyncValue, len(re.rules))
+func (re *AsyncEngine) When(facts map[string]any) interfaces.Engine {
+	re.facts = facts
+	return re
+}
+
+func (re *AsyncEngine) Run(callback models.Callback) {
+	queue := make(chan value, len(re.rules))
 
 	for _, rule := range re.rules {
 		go func(r *models.Rule) {
-			if re.Worker.Execute(r, facts) {
-				queue <- asyncValue{trigger: true, emmiter: r.Event}
+			if re.Worker.Execute(r, re.facts) {
+				queue <- value{trigger: true, emmiter: r.Event}
 			} else {
-				queue <- asyncValue{trigger: false, emmiter: r.Event}
+				queue <- value{trigger: false, emmiter: r.Event}
 			}
 		}(&rule)
 	}

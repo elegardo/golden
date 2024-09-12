@@ -6,40 +6,59 @@ import (
 	. "github.com/elegardo/golden/core/models"
 )
 
+var rules1 = []Rule{
+	{
+		Event: ExampleEvent{text: "Event 1"},
+		Conditions: []Condition{
+			{
+				Gate: ALL,
+				Conditionals: []Conditional{
+					{
+						Fact:     "lang",
+						Operator: CO,
+						Value:    []string{"pt", "es"},
+					},
+					{
+						Fact:     "country",
+						Operator: CO,
+						Value:    []string{"br", "cl"},
+					},
+					{
+						Fact:     "points",
+						Operator: CO,
+						Value:    []int{9, 99, 999},
+					},
+				},
+			},
+		},
+	},
+	{
+		Event: ExampleEvent{text: "Event 2"},
+		Conditions: []Condition{
+			{
+				Gate: ALL,
+				Conditionals: []Conditional{
+					{
+						Fact:     "type",
+						Operator: CO,
+						Value:    []string{"basic", "medium"},
+					},
+				},
+			},
+		},
+	},
+}
+
+// AsyncEngine
 func ExampleNewAsyncEngine_gateAllOperatorCo1() {
-	var engine = NewAsyncEngine()
+	engine := NewAsyncEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",
 		"points":  99,
 	}
-	engine.Given([]Rule{
-		{
-			Event: ExampleEvent{text: "Event 1"},
-			Conditions: []Condition{
-				{
-					Gate: ALL,
-					Conditionals: []Conditional{
-						{
-							Fact:     "lang",
-							Operator: CO,
-							Value:    []string{"pt", "es"},
-						},
-						{
-							Fact:     "country",
-							Operator: CO,
-							Value:    []string{"br", "cl"},
-						},
-						{
-							Fact:     "points",
-							Operator: CO,
-							Value:    []int{9, 99, 999},
-						},
-					},
-				},
-			},
-		},
-	}).Run(facts, func(emmiter Emmiter) {
+
+	engine.Given(rules1).When(facts).Run(func(emmiter Emmiter) {
 		fmt.Println(emmiter.Value())
 	})
 
@@ -53,59 +72,10 @@ func ExampleNewAsyncEngine_gateAllOperatorCo2() {
 		"lang":    "pt",
 		"country": "br",
 		"points":  99,
+		"type":    "basic",
 	}
-	engine.Given([]Rule{
-		{
-			Event: ExampleEvent{order: 1, text: "Event 1"},
-			Conditions: []Condition{
-				{
-					Gate: ALL,
-					Conditionals: []Conditional{
-						{
-							Fact:     "lang",
-							Operator: CO,
-							Value:    []string{"pt", "es"},
-						},
-						{
-							Fact:     "country",
-							Operator: CO,
-							Value:    []string{"br", "cl"},
-						},
-						{
-							Fact:     "points",
-							Operator: CO,
-							Value:    []int{9, 99, 999},
-						},
-					},
-				},
-			},
-		},
-		{
-			Event: ExampleEvent{order: 2, text: "Event 2"},
-			Conditions: []Condition{
-				{
-					Gate: ALL,
-					Conditionals: []Conditional{
-						{
-							Fact:     "lang",
-							Operator: CO,
-							Value:    []string{"pt", "en"},
-						},
-						{
-							Fact:     "country",
-							Operator: CO,
-							Value:    []string{"br", "pe"},
-						},
-						{
-							Fact:     "points",
-							Operator: CO,
-							Value:    []int{9, 99, 9_999},
-						},
-					},
-				},
-			},
-		},
-	}).Run(facts, func(emmiter Emmiter) {
+
+	engine.Given(rules1).When(facts).Run(func(emmiter Emmiter) {
 		fmt.Println(emmiter.Value())
 	})
 
@@ -117,62 +87,13 @@ func ExampleNewAsyncEngine_gateAllOperatorCo2() {
 func ExampleNewAsyncEngine_gateAllOperatorCo3() {
 	var engine = NewAsyncEngine()
 	facts := map[string]any{
-		"lang":    "pt",
-		"country": "br",
-		"points":  99,
+		"lang":    "en",
+		"country": "cl",
+		"points":  100,
+		"type":    "medium",
 	}
-	engine.Given([]Rule{
-		{
-			Event: ExampleEvent{order: 1, text: "Event 1"},
-			Conditions: []Condition{
-				{
-					Gate: ALL,
-					Conditionals: []Conditional{
-						{
-							Fact:     "lang",
-							Operator: CO,
-							Value:    []string{"es", "en"},
-						},
-						{
-							Fact:     "country",
-							Operator: CO,
-							Value:    []string{"cl", "pe"},
-						},
-						{
-							Fact:     "points",
-							Operator: CO,
-							Value:    []int{1, 11, 111},
-						},
-					},
-				},
-			},
-		},
-		{
-			Event: ExampleEvent{order: 2, text: "Event 2"},
-			Conditions: []Condition{
-				{
-					Gate: ALL,
-					Conditionals: []Conditional{
-						{
-							Fact:     "lang",
-							Operator: CO,
-							Value:    []string{"pt", "en"},
-						},
-						{
-							Fact:     "country",
-							Operator: CO,
-							Value:    []string{"br", "pe"},
-						},
-						{
-							Fact:     "points",
-							Operator: CO,
-							Value:    []int{9, 99, 999},
-						},
-					},
-				},
-			},
-		},
-	}).Run(facts, func(emmiter Emmiter) {
+
+	engine.Given(rules1).When(facts).Run(func(emmiter Emmiter) {
 		fmt.Println(emmiter.Value())
 	})
 
@@ -183,289 +104,109 @@ func ExampleNewAsyncEngine_gateAllOperatorCo3() {
 func ExampleNewAsyncEngine_gateAllOperatorCo4() {
 	var engine = NewAsyncEngine()
 	facts := map[string]any{
-		"lang": "pt",
+		"lang": "en",
 	}
-	engine.Given([]Rule{
-		{
-			Event: ExampleEvent{order: 1, text: "Event 1"},
-			Conditions: []Condition{
-				{
-					Gate: ALL,
-					Conditionals: []Conditional{
-						{
-							Fact:     "lang",
-							Operator: CO,
-							Value:    []string{"pt", "en"},
-						},
-					},
-				},
-			},
-		},
-	}).Run(facts, func(emmiter Emmiter) {
+
+	engine.Given(rules1).When(facts).Run(func(emmiter Emmiter) {
 		fmt.Println(emmiter.Value())
 	})
 
 	// Output:
-	// Event 1
 }
 
 func ExampleNewAsyncEngine_gateAllOperatorCo5() {
 	var engine = NewAsyncEngine()
 	facts := map[string]any{
-		"lang": "pt",
+		"type": "premium",
 	}
-	engine.Given([]Rule{
-		{
-			Event: ExampleEvent{order: 1, text: "Event 1"},
-			Conditions: []Condition{
-				{
-					Gate: ALL,
-					Conditionals: []Conditional{
-						{
-							Fact:     "lang",
-							Operator: CO,
-							Value:    []string{"es", "en"},
-						},
-					},
-				},
-			},
-		},
-	}).Run(facts, func(emmiter Emmiter) {
+
+	engine.Given(rules1).When(facts).Run(func(emmiter Emmiter) {
 		fmt.Println(emmiter.Value())
 	})
 
 	// Output:
 }
 
-// SYNC ENGINE
-
-func ExampleNewSyncEngine_gateAllOperatorCo1() {
-	var engine = NewSyncEngine()
+// RunnerEngine
+func ExampleNewRunnerEngine_gateAllOperatorCo1() {
+	runner := NewRunnerEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",
 		"points":  99,
 	}
-	engine.Given([]Rule{
-		{
-			Event: ExampleEvent{text: "Event 1"},
-			Conditions: []Condition{
-				{
-					Gate: ALL,
-					Conditionals: []Conditional{
-						{
-							Fact:     "lang",
-							Operator: CO,
-							Value:    []string{"pt", "es"},
-						},
-						{
-							Fact:     "country",
-							Operator: CO,
-							Value:    []string{"br", "cl"},
-						},
-						{
-							Fact:     "points",
-							Operator: CO,
-							Value:    []int{9, 99, 999},
-						},
-					},
-				},
-			},
-		},
-	}).Run(facts, func(emmiter Emmiter) {
-		fmt.Println(emmiter.Value())
-	})
+
+	for _, rule := range rules1 {
+		fmt.Println(runner.Run(&rule, facts))
+	}
 
 	// Output:
-	// Event 1
+	// true
+	// false
 }
 
-func ExampleNewSyncEngine_gateAllOperatorCo2() {
-	var engine = NewSyncEngine()
+func ExampleNewRunnerEngine_gateAllOperatorCo2() {
+	runner := NewRunnerEngine()
 	facts := map[string]any{
 		"lang":    "pt",
 		"country": "br",
 		"points":  99,
+		"type":    "basic",
 	}
-	engine.Given([]Rule{
-		{
-			Event: ExampleEvent{order: 1, text: "Event 1"},
-			Conditions: []Condition{
-				{
-					Gate: ALL,
-					Conditionals: []Conditional{
-						{
-							Fact:     "lang",
-							Operator: CO,
-							Value:    []string{"pt", "es"},
-						},
-						{
-							Fact:     "country",
-							Operator: CO,
-							Value:    []string{"br", "cl"},
-						},
-						{
-							Fact:     "points",
-							Operator: CO,
-							Value:    []int{9, 99, 999},
-						},
-					},
-				},
-			},
-		},
-		{
-			Event: ExampleEvent{order: 2, text: "Event 2"},
-			Conditions: []Condition{
-				{
-					Gate: ALL,
-					Conditionals: []Conditional{
-						{
-							Fact:     "lang",
-							Operator: CO,
-							Value:    []string{"pt", "en"},
-						},
-						{
-							Fact:     "country",
-							Operator: CO,
-							Value:    []string{"br", "pe"},
-						},
-						{
-							Fact:     "points",
-							Operator: CO,
-							Value:    []int{9, 99, 9_999},
-						},
-					},
-				},
-			},
-		},
-	}).Run(facts, func(emmiter Emmiter) {
-		fmt.Println(emmiter.Value())
-	})
+
+	for _, rule := range rules1 {
+		fmt.Println(runner.Run(&rule, facts))
+	}
 
 	// Output:
-	// Event 1
-	// Event 2
+	// true
+	// true
 }
 
-func ExampleNewSyncEngine_gateAllOperatorCo3() {
-	var engine = NewSyncEngine()
+func ExampleNewRunnerEngine_gateAllOperatorCo3() {
+	runner := NewRunnerEngine()
 	facts := map[string]any{
-		"lang":    "pt",
-		"country": "br",
-		"points":  99,
+		"lang":    "en",
+		"country": "cl",
+		"points":  100,
+		"type":    "medium",
 	}
-	engine.Given([]Rule{
-		{
-			Event: ExampleEvent{order: 1, text: "Event 1"},
-			Conditions: []Condition{
-				{
-					Gate: ALL,
-					Conditionals: []Conditional{
-						{
-							Fact:     "lang",
-							Operator: CO,
-							Value:    []string{"es", "en"},
-						},
-						{
-							Fact:     "country",
-							Operator: CO,
-							Value:    []string{"cl", "pe"},
-						},
-						{
-							Fact:     "points",
-							Operator: CO,
-							Value:    []int{1, 11, 111},
-						},
-					},
-				},
-			},
-		},
-		{
-			Event: ExampleEvent{order: 2, text: "Event 2"},
-			Conditions: []Condition{
-				{
-					Gate: ALL,
-					Conditionals: []Conditional{
-						{
-							Fact:     "lang",
-							Operator: CO,
-							Value:    []string{"pt", "en"},
-						},
-						{
-							Fact:     "country",
-							Operator: CO,
-							Value:    []string{"br", "pe"},
-						},
-						{
-							Fact:     "points",
-							Operator: CO,
-							Value:    []int{9, 99, 999},
-						},
-					},
-				},
-			},
-		},
-	}).Run(facts, func(emmiter Emmiter) {
-		fmt.Println(emmiter.Value())
-	})
+
+	for _, rule := range rules1 {
+		fmt.Println(runner.Run(&rule, facts))
+	}
 
 	// Output:
-	// Event 2
+	// false
+	// true
 }
 
-func ExampleNewSyncEngine_gateAllOperatorCo4() {
-	var engine = NewSyncEngine()
+func ExampleNewRunnerEngine_gateAllOperatorCo4() {
+	runner := NewRunnerEngine()
 	facts := map[string]any{
-		"lang": "pt",
+		"lang": "en",
 	}
-	engine.Given([]Rule{
-		{
-			Event: ExampleEvent{order: 1, text: "Event 1"},
-			Conditions: []Condition{
-				{
-					Gate: ALL,
-					Conditionals: []Conditional{
-						{
-							Fact:     "lang",
-							Operator: CO,
-							Value:    []string{"pt", "en"},
-						},
-					},
-				},
-			},
-		},
-	}).Run(facts, func(emmiter Emmiter) {
-		fmt.Println(emmiter.Value())
-	})
+
+	for _, rule := range rules1 {
+		fmt.Println(runner.Run(&rule, facts))
+	}
 
 	// Output:
-	// Event 1
+	// false
+	// false
 }
 
-func ExampleNewSyncEngine_gateAllOperatorCo5() {
-	var engine = NewSyncEngine()
+func ExampleNewRunnerEngine_gateAllOperatorCo5() {
+	runner := NewRunnerEngine()
 	facts := map[string]any{
-		"lang": "pt",
+		"type": "premium",
 	}
-	engine.Given([]Rule{
-		{
-			Event: ExampleEvent{order: 1, text: "Event 1"},
-			Conditions: []Condition{
-				{
-					Gate: ALL,
-					Conditionals: []Conditional{
-						{
-							Fact:     "lang",
-							Operator: CO,
-							Value:    []string{"es", "en"},
-						},
-					},
-				},
-			},
-		},
-	}).Run(facts, func(emmiter Emmiter) {
-		fmt.Println(emmiter.Value())
-	})
+
+	for _, rule := range rules1 {
+		fmt.Println(runner.Run(&rule, facts))
+	}
 
 	// Output:
+	// false
+	// false
 }

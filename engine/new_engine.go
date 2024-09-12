@@ -18,13 +18,13 @@ func worker() interfaces.Workereable {
 	}
 }
 
-func NewSyncEngine(args ...string) interfaces.Engineable {
-	return &SyncEngine{
+func NewRunnerEngine(args ...string) interfaces.Runnable {
+	return &RunnerEngine{
 		Worker: worker(),
 	}
 }
 
-func NewAsyncEngine(args ...string) interfaces.Engineable {
+func NewAsyncEngine(args ...string) interfaces.Engine {
 	return &AsyncEngine{
 		Worker: worker(),
 	}

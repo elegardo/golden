@@ -117,7 +117,7 @@ func BenchmarkRuleEngine(b *testing.B) {
 			"country": "cl",
 			"lang":    "es",
 		}
-		ruleEngine.Given(rules).Run(facts, some)
+		ruleEngine.Given(rules).When(facts).Run(some)
 	}
 }
 
