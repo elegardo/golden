@@ -17,8 +17,6 @@ func (w *Worker) Execute(rule models.Rule, facts map[string]any) bool {
 	wg := sync.WaitGroup{}
 	ch := make(chan bool, len(rule.Conditions))
 
-	// sort.Sort(models.ConditionSorter(rule.Conditions))
-
 	for _, condition := range rule.Conditions {
 		wg.Add(one)
 		go w.evaluate(&wg, ch, facts, condition)
