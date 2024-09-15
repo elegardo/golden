@@ -9,6 +9,7 @@ type Matcher struct {
 	Evaluator interfaces.Evaluable
 }
 
+// 4 allocs/op
 func (rm *Matcher) AllTrue(facts map[string]any, conditionals []models.Conditional) bool {
 	ch := make(chan bool, len(conditionals))
 
@@ -27,6 +28,7 @@ func (rm *Matcher) AllTrue(facts map[string]any, conditionals []models.Condition
 	return allTrue
 }
 
+// 4 allocs/op
 func (rm *Matcher) AnyTrue(facts map[string]any, conditionals []models.Conditional) bool {
 	ch := make(chan bool, len(conditionals))
 
@@ -43,6 +45,7 @@ func (rm *Matcher) AnyTrue(facts map[string]any, conditionals []models.Condition
 	return anyTrue
 }
 
+// 4 allocs/op
 func (rm *Matcher) NoneTrue(facts map[string]any, conditionals []models.Conditional) bool {
 	ch := make(chan bool, len(conditionals))
 

@@ -7,23 +7,24 @@ import (
 	"github.com/elegardo/golden/core/models"
 )
 
-const one = 1
-
 type Worker struct {
 	Matcher interfaces.Matchable
 }
 
+// 18 allocs/op
 func (w *Worker) Execute(rule models.Rule, facts map[string]any) bool {
 	wg := sync.WaitGroup{}
 	ch := make(chan bool, len(rule.Conditions))
 
 	for _, condition := range rule.Conditions {
-		wg.Add(one)
+		wg.Add(1)
 		go w.evaluate(&wg, ch, facts, condition)
 	}
 
-	wg.Wait()
-	close(ch)
+	go func() {
+		wg.Wait()
+		close(ch)
+	}()
 
 	allTrue := false
 	for result := range ch {

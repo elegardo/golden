@@ -1,14 +1,11 @@
 package engine
 
 import (
+	"sync"
+
 	"github.com/elegardo/golden/core/interfaces"
 	"github.com/elegardo/golden/core/models"
 )
-
-type value struct {
-	trigger bool
-	emmiter models.Emmiter
-}
 
 type AsyncEngine struct {
 	Worker interfaces.Workereable
@@ -26,23 +23,29 @@ func (re *AsyncEngine) When(facts map[string]any) interfaces.Engine {
 	return re
 }
 
+// 6 allocs/op
 func (re *AsyncEngine) Run(callback models.Callback) {
-	ch := make(chan value, len(re.rules))
+	wg := sync.WaitGroup{}
+	ch := make(chan models.Emmiter, len(re.rules))
 
 	for _, rule := range re.rules {
-		go func(r models.Rule) {
-			if re.Worker.Execute(r, re.facts) {
-				ch <- value{trigger: true, emmiter: r.Event}
-			} else {
-				ch <- value{trigger: false, emmiter: r.Event}
-			}
-		}(rule)
+		wg.Add(1)
+		go re.worker(&wg, ch, rule)
 	}
 
-	for i := 0; i < cap(ch); i++ {
-		value := <-ch
-		if value.trigger {
-			callback(value.emmiter)
-		}
+	go func() {
+		wg.Wait()
+		defer close(ch)
+	}()
+
+	for result := range ch {
+		callback(result)
+	}
+}
+
+func (re *AsyncEngine) worker(wg *sync.WaitGroup, ch chan<- models.Emmiter, rule models.Rule) {
+	defer wg.Done()
+	if re.Worker.Execute(rule, re.facts) {
+		ch <- rule.Event
 	}
 }

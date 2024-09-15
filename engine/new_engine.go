@@ -7,6 +7,7 @@ import (
 
 // TODO: implement CLI flags
 // -workers-pool=10
+// -timeout=1
 
 func worker() interfaces.Workereable {
 	return &core.Worker{
