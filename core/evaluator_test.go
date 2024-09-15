@@ -81,7 +81,7 @@ func TestEvaluator_Evaluate(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		result := evaluator.Evaluate(&tt.conditional.Operator, tt.fact, tt.conditional.Value)
+		result := evaluator.Evaluate(tt.conditional.Operator, tt.fact, tt.conditional.Value)
 		if result != tt.expected {
 			t.Errorf("Evaluator.Evaluate() = %v, want %v", result, tt.expected)
 		}

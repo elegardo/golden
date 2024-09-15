@@ -86,6 +86,11 @@ var rules = []Rule{
 						Operator: EQ,
 						Value:    "John",
 					},
+					{
+						Fact:     "age",
+						Operator: CO,
+						Value:    []int{20, 30},
+					},
 				},
 			},
 			{
@@ -93,13 +98,18 @@ var rules = []Rule{
 				Conditionals: []Conditional{
 					{
 						Fact:     "country",
-						Operator: EQ,
-						Value:    "pe",
+						Operator: CO,
+						Value:    []string{"pe", "cl"},
 					},
+				},
+			},
+			{
+				Gate: NONE,
+				Conditionals: []Conditional{
 					{
 						Fact:     "country",
-						Operator: EQ,
-						Value:    "cl",
+						Operator: IN,
+						Value:    "peru",
 					},
 				},
 			},

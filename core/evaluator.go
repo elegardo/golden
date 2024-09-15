@@ -4,23 +4,18 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/elegardo/golden/core/interfaces"
 	"github.com/elegardo/golden/core/models"
 )
 
 type Evaluator struct {
 }
 
-func (e *Evaluator) Evaluate(operator *models.Operator, fact, value any) bool {
-	switch *operator {
+func (e *Evaluator) Evaluate(operator models.Operator, fact, value any) bool {
+	switch operator {
 	case models.CO:
-		a := Container[any]{Value: value}
-		b := Container[any]{Value: fact}
-		return a.Contains(b)
+		return Contains(fact, value)
 	case models.NC:
-		a := Container[any]{Value: value}
-		b := Container[any]{Value: fact}
-		return !a.Contains(b)
+		return !Contains(fact, value)
 	case models.IN:
 		// TODO: print warning
 		if theyAreNotString(fact, value) {
@@ -39,24 +34,25 @@ func (e *Evaluator) Evaluate(operator *models.Operator, fact, value any) bool {
 		if reflect.TypeOf(fact) != reflect.TypeOf(value) {
 			return false
 		}
-		return e.compare(operator, Comparator[any]{Value: fact}, Comparator[any]{Value: value})
+		return e.compare(operator, fact, value)
 	}
 }
 
-func (e *Evaluator) compare(operator *models.Operator, fact, value interfaces.Comparable) bool {
-	switch *operator {
+func (e *Evaluator) compare(operator models.Operator, fact, value any) bool {
+	result := Compare(fact, value)
+	switch operator {
 	case models.EQ:
-		return fact.Compare(value) == 0
+		return result == 0
 	case models.NE:
-		return fact.Compare(value) != 0
+		return result != 0
 	case models.GT:
-		return fact.Compare(value) > 0
+		return result > 0
 	case models.GE:
-		return fact.Compare(value) >= 0
+		return result >= 0
 	case models.LT:
-		return fact.Compare(value) < 0
+		return result < 0
 	case models.LE:
-		return fact.Compare(value) <= 0
+		return result <= 0
 	default:
 		panic("unsupported comparator")
 	}

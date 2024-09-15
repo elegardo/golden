@@ -9,8 +9,8 @@ type Matcher struct {
 	Evaluator interfaces.Evaluable
 }
 
-func (rm *Matcher) AllTrue(facts map[string]any, conditionals *[]models.Conditional) bool {
-	ch := make(chan bool, len(*conditionals))
+func (rm *Matcher) AllTrue(facts map[string]any, conditionals []models.Conditional) bool {
+	ch := make(chan bool, len(conditionals))
 
 	go rm.evaluate(ch, facts, conditionals)
 
@@ -27,8 +27,8 @@ func (rm *Matcher) AllTrue(facts map[string]any, conditionals *[]models.Conditio
 	return allTrue
 }
 
-func (rm *Matcher) AnyTrue(facts map[string]any, conditionals *[]models.Conditional) bool {
-	ch := make(chan bool, len(*conditionals))
+func (rm *Matcher) AnyTrue(facts map[string]any, conditionals []models.Conditional) bool {
+	ch := make(chan bool, len(conditionals))
 
 	go rm.evaluate(ch, facts, conditionals)
 
@@ -43,8 +43,8 @@ func (rm *Matcher) AnyTrue(facts map[string]any, conditionals *[]models.Conditio
 	return anyTrue
 }
 
-func (rm *Matcher) NoneTrue(facts map[string]any, conditionals *[]models.Conditional) bool {
-	ch := make(chan bool, len(*conditionals))
+func (rm *Matcher) NoneTrue(facts map[string]any, conditionals []models.Conditional) bool {
+	ch := make(chan bool, len(conditionals))
 
 	go rm.evaluate(ch, facts, conditionals)
 
@@ -61,10 +61,10 @@ func (rm *Matcher) NoneTrue(facts map[string]any, conditionals *[]models.Conditi
 	return noneTrue
 }
 
-func (rm *Matcher) evaluate(ch chan bool, facts map[string]any, conditionals *[]models.Conditional) {
-	for _, conditional := range *conditionals {
+func (rm *Matcher) evaluate(ch chan bool, facts map[string]any, conditionals []models.Conditional) {
+	for _, conditional := range conditionals {
 		if fact, exists := facts[conditional.Fact]; exists {
-			ch <- rm.Evaluator.Evaluate(&conditional.Operator, fact, conditional.Value)
+			ch <- rm.Evaluator.Evaluate(conditional.Operator, fact, conditional.Value)
 		}
 	}
 	close(ch)

@@ -137,7 +137,7 @@ func ExampleNewRunnerEngine_gateAllOperatorCo1() {
 	}
 
 	for _, rule := range rules1 {
-		fmt.Println(runner.Run(&rule, facts))
+		fmt.Println(runner.Run(rule, facts))
 	}
 
 	// Output:
@@ -155,7 +155,7 @@ func ExampleNewRunnerEngine_gateAllOperatorCo2() {
 	}
 
 	for _, rule := range rules1 {
-		fmt.Println(runner.Run(&rule, facts))
+		fmt.Println(runner.Run(rule, facts))
 	}
 
 	// Output:
@@ -173,7 +173,7 @@ func ExampleNewRunnerEngine_gateAllOperatorCo3() {
 	}
 
 	for _, rule := range rules1 {
-		fmt.Println(runner.Run(&rule, facts))
+		fmt.Println(runner.Run(rule, facts))
 	}
 
 	// Output:
@@ -188,7 +188,7 @@ func ExampleNewRunnerEngine_gateAllOperatorCo4() {
 	}
 
 	for _, rule := range rules1 {
-		fmt.Println(runner.Run(&rule, facts))
+		fmt.Println(runner.Run(rule, facts))
 	}
 
 	// Output:
@@ -203,7 +203,7 @@ func ExampleNewRunnerEngine_gateAllOperatorCo5() {
 	}
 
 	for _, rule := range rules1 {
-		fmt.Println(runner.Run(&rule, facts))
+		fmt.Println(runner.Run(rule, facts))
 	}
 
 	// Output:

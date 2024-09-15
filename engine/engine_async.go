@@ -27,20 +27,20 @@ func (re *AsyncEngine) When(facts map[string]any) interfaces.Engine {
 }
 
 func (re *AsyncEngine) Run(callback models.Callback) {
-	queue := make(chan value, len(re.rules))
+	ch := make(chan value, len(re.rules))
 
 	for _, rule := range re.rules {
-		go func(r *models.Rule) {
+		go func(r models.Rule) {
 			if re.Worker.Execute(r, re.facts) {
-				queue <- value{trigger: true, emmiter: r.Event}
+				ch <- value{trigger: true, emmiter: r.Event}
 			} else {
-				queue <- value{trigger: false, emmiter: r.Event}
+				ch <- value{trigger: false, emmiter: r.Event}
 			}
-		}(&rule)
+		}(rule)
 	}
 
-	for i := 0; i < cap(queue); i++ {
-		value := <-queue
+	for i := 0; i < cap(ch); i++ {
+		value := <-ch
 		if value.trigger {
 			callback(value.emmiter)
 		}

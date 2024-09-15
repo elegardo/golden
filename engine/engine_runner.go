@@ -10,6 +10,6 @@ type RunnerEngine struct {
 	Worker interfaces.Workereable
 }
 
-func (se *RunnerEngine) Run(rule *models.Rule, facts map[string]any) bool {
+func (se *RunnerEngine) Run(rule models.Rule, facts map[string]any) bool {
 	return se.Worker.Execute(rule, facts)
 }

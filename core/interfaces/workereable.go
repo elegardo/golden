@@ -5,5 +5,5 @@ import (
 )
 
 type Workereable interface {
-	Execute(rule *models.Rule, facts map[string]any) bool
+	Execute(rule models.Rule, facts map[string]any) bool
 }
