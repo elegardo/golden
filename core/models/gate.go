@@ -5,7 +5,7 @@ package models
 // any	Any conditions of rules are true
 // none	None conditions of rules are true
 
-type Gate int
+type Gate byte
 
 const (
 	ALL Gate = iota

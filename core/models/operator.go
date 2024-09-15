@@ -12,7 +12,7 @@ package models
 // in	String in other string
 // ni	String not in other string
 
-type Operator int
+type Operator byte
 
 const (
 	EQ Operator = iota
