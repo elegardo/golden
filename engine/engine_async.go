@@ -10,12 +10,11 @@ import (
 // Create a wait group to synchronize workers
 var wg sync.WaitGroup
 
-const numWorkers = 5
-
 type AsyncEngine struct {
-	Worker interfaces.Workereable
-	rules  []models.Rule
-	facts  map[string]any
+	Worker  interfaces.Workereable
+	rules   []models.Rule
+	facts   map[string]any
+	workers int
 }
 
 func (re *AsyncEngine) Given(rules []models.Rule) interfaces.Engine {
@@ -36,7 +35,7 @@ func (re *AsyncEngine) Run(callback models.Callback) {
 	results := make(chan models.Emmiter, numJobs)
 
 	// Launch worker goroutines
-	for i := 0; i < numWorkers; i++ {
+	for i := 0; i < re.workers; i++ {
 		wg.Add(1)
 		//Worker
 		go func() {

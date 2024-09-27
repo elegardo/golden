@@ -6,7 +6,7 @@ import (
 )
 
 // TODO: implement CLI flags
-// -workers-pool=10
+// -workers-pool=5
 // -exit-first-success
 // -exit-first-fail
 
@@ -26,7 +26,8 @@ func NewRunnerEngine(args ...string) interfaces.Runnable {
 
 func NewAsyncEngine(args ...string) interfaces.Engine {
 	return &AsyncEngine{
-		Worker: syncWorker(),
+		Worker:  syncWorker(),
+		workers: 5,
 	}
 }
 
