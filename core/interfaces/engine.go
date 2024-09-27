@@ -1,8 +1,6 @@
 package interfaces
 
-import (
-	"github.com/elegardo/golden/core/models"
-)
+import "github.com/elegardo/golden/core/models"
 
 // # Given(..)
 //

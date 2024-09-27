@@ -7,9 +7,10 @@ import (
 
 // TODO: implement CLI flags
 // -workers-pool=10
-// -timeout=1
+// -exit-first-success
+// -exit-first-fail
 
-func worker() interfaces.Workereable {
+func syncWorker() interfaces.Workereable {
 	return &core.Worker{
 		Matcher: &core.Matcher{
 			Evaluator: &core.Evaluator{},
@@ -19,12 +20,18 @@ func worker() interfaces.Workereable {
 
 func NewRunnerEngine(args ...string) interfaces.Runnable {
 	return &RunnerEngine{
-		Worker: worker(),
+		Worker: syncWorker(),
 	}
 }
 
 func NewAsyncEngine(args ...string) interfaces.Engine {
 	return &AsyncEngine{
-		Worker: worker(),
+		Worker: syncWorker(),
+	}
+}
+
+func NewSyncEngine(args ...string) interfaces.Engine {
+	return &SyncEngine{
+		Worker: syncWorker(),
 	}
 }

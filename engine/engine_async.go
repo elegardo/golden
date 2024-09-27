@@ -7,6 +7,11 @@ import (
 	"github.com/elegardo/golden/core/models"
 )
 
+// Create a wait group to synchronize workers
+var wg sync.WaitGroup
+
+const numWorkers = 5
+
 type AsyncEngine struct {
 	Worker interfaces.Workereable
 	rules  []models.Rule
@@ -23,29 +28,44 @@ func (re *AsyncEngine) When(facts map[string]any) interfaces.Engine {
 	return re
 }
 
-// 6 allocs/op
 func (re *AsyncEngine) Run(callback models.Callback) {
-	wg := sync.WaitGroup{}
-	ch := make(chan models.Emmiter, len(re.rules))
+	numJobs := len(re.rules)
 
-	for _, rule := range re.rules {
+	// Create channels for jobs and results
+	jobs := make(chan models.Rule, numJobs)
+	results := make(chan models.Emmiter, numJobs)
+
+	// Launch worker goroutines
+	for i := 0; i < numWorkers; i++ {
 		wg.Add(1)
-		go re.worker(&wg, ch, rule)
+		//Worker
+		go func() {
+			defer wg.Done()
+
+			for rule := range jobs {
+				if re.Worker.Execute(rule, re.facts) {
+					results <- rule.Event
+				}
+			}
+
+		}()
 	}
 
-	go func() {
-		wg.Wait()
-		defer close(ch)
-	}()
+	// Generate jobs
+	for _, rule := range re.rules {
+		jobs <- rule
+	}
 
-	for result := range ch {
+	// Close the jobs channel to signal that no more tasks will be added
+	close(jobs)
+
+	// Wait for all workers to finish
+	wg.Wait()
+
+	// Close the results channel
+	close(results)
+
+	for result := range results {
 		callback(result)
-	}
-}
-
-func (re *AsyncEngine) worker(wg *sync.WaitGroup, ch chan<- models.Emmiter, rule models.Rule) {
-	defer wg.Done()
-	if re.Worker.Execute(rule, re.facts) {
-		ch <- rule.Event
 	}
 }
