@@ -41,8 +41,8 @@ func ExampleNewAsyncEngine_gateAllOperatorEq1() {
 		"country": "br",
 		"isHuman": true,
 	}
-	engine.Given(rules2).When(facts).Run(func(emmiter Emmiter) {
-		fmt.Println(emmiter.Value())
+	engine.Given(rules2).When(facts).Run(func(event Event) {
+		fmt.Println(event.Value())
 	})
 
 	// Output:
@@ -97,8 +97,8 @@ func ExampleNewAsyncEngine_gateAllOperatorEq2() {
 				},
 			},
 		},
-	}).When(facts).Run(func(emmiter Emmiter) {
-		fmt.Println(emmiter.Value())
+	}).When(facts).Run(func(event Event) {
+		fmt.Println(event.Value())
 	})
 
 	// Unordered output:
@@ -159,8 +159,8 @@ func ExampleNewAsyncEngine_gateAllOperatorEq3() {
 				},
 			},
 		},
-	}).When(facts).Run(func(emmiter Emmiter) {
-		fmt.Println(emmiter.Value())
+	}).When(facts).Run(func(event Event) {
+		fmt.Println(event.Value())
 	})
 
 	// Output:
@@ -190,8 +190,8 @@ func ExampleNewAsyncEngine_gateAllOperatorEq4() {
 				},
 			},
 		},
-	}).When(facts).Run(func(emmiter Emmiter) {
-		fmt.Println(emmiter.Value())
+	}).When(facts).Run(func(event Event) {
+		fmt.Println(event.Value())
 	})
 
 	// Output:
@@ -221,8 +221,8 @@ func ExampleNewAsyncEngine_gateAllOperatorEq5() {
 				},
 			},
 		},
-	}).When(facts).Run(func(emmiter Emmiter) {
-		fmt.Println(emmiter.Value())
+	}).When(facts).Run(func(event Event) {
+		fmt.Println(event.Value())
 	})
 
 	// Output:
@@ -251,8 +251,8 @@ func ExampleNewAsyncEngine_gateAllOperatorEq6() {
 				},
 			},
 		},
-	}).When(facts).Run(func(emmiter Emmiter) {
-		fmt.Println(emmiter.Value())
+	}).When(facts).Run(func(event Event) {
+		fmt.Println(event.Value())
 	})
 
 	// Output:

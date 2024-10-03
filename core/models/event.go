@@ -1,6 +1,6 @@
 package models
 
-type Emmiter interface {
+type Event interface {
 	Order() int
 	Value() any
 }

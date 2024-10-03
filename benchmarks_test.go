@@ -139,7 +139,7 @@ func BenchmarkAsyncEngine(b *testing.B) {
 	}
 	engine.Given(rules).When(facts)
 	for i := 0; i < b.N; i++ {
-		engine.Run(func(emmiter Emmiter) {})
+		engine.Run(func(event Event) {})
 	}
 }
 
@@ -154,6 +154,6 @@ func BenchmarkSyncEngine(b *testing.B) {
 	}
 	engine.Given(rules).When(facts)
 	for i := 0; i < b.N; i++ {
-		engine.Run(func(emmiter Emmiter) {})
+		engine.Run(func(event Event) {})
 	}
 }

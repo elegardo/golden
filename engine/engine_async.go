@@ -32,7 +32,7 @@ func (re *AsyncEngine) Run(callback models.Callback) {
 
 	// Create channels for jobs and results
 	jobs := make(chan models.Rule, numJobs)
-	results := make(chan models.Emmiter, numJobs)
+	results := make(chan models.Event, numJobs)
 
 	// Launch worker goroutines
 	for i := 0; i < re.workers; i++ {

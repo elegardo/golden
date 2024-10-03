@@ -27,7 +27,7 @@ import "github.com/elegardo/golden/core/models"
 // # Run(..)
 //
 // Evalua las reglas y acepta como parametro una función "callback"
-// que recibe elementos "Emmiter" que son eventos de las reglas gatilladas.
+// que recibe elementos "Event" que son eventos de las reglas gatilladas.
 //
 // Para ser ejecutado se deben configurar previamente las "rules" y las "facts":
 //

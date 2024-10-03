@@ -1,3 +1,3 @@
 package models
 
-type Callback func(Emmiter)
+type Callback func(Event)

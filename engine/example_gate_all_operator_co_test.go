@@ -58,8 +58,8 @@ func ExampleNewAsyncEngine_gateAllOperatorCo1() {
 		"points":  99,
 	}
 
-	engine.Given(rules1).When(facts).Run(func(emmiter Emmiter) {
-		fmt.Println(emmiter.Value())
+	engine.Given(rules1).When(facts).Run(func(event Event) {
+		fmt.Println(event.Value())
 	})
 
 	// Output:
@@ -75,8 +75,8 @@ func ExampleNewAsyncEngine_gateAllOperatorCo2() {
 		"type":    "basic",
 	}
 
-	engine.Given(rules1).When(facts).Run(func(emmiter Emmiter) {
-		fmt.Println(emmiter.Value())
+	engine.Given(rules1).When(facts).Run(func(event Event) {
+		fmt.Println(event.Value())
 	})
 
 	// Unordered output:
@@ -93,8 +93,8 @@ func ExampleNewAsyncEngine_gateAllOperatorCo3() {
 		"type":    "medium",
 	}
 
-	engine.Given(rules1).When(facts).Run(func(emmiter Emmiter) {
-		fmt.Println(emmiter.Value())
+	engine.Given(rules1).When(facts).Run(func(event Event) {
+		fmt.Println(event.Value())
 	})
 
 	// Output:
@@ -107,8 +107,8 @@ func ExampleNewAsyncEngine_gateAllOperatorCo4() {
 		"lang": "en",
 	}
 
-	engine.Given(rules1).When(facts).Run(func(emmiter Emmiter) {
-		fmt.Println(emmiter.Value())
+	engine.Given(rules1).When(facts).Run(func(event Event) {
+		fmt.Println(event.Value())
 	})
 
 	// Output:
@@ -120,8 +120,8 @@ func ExampleNewAsyncEngine_gateAllOperatorCo5() {
 		"type": "premium",
 	}
 
-	engine.Given(rules1).When(facts).Run(func(emmiter Emmiter) {
-		fmt.Println(emmiter.Value())
+	engine.Given(rules1).When(facts).Run(func(event Event) {
+		fmt.Println(event.Value())
 	})
 
 	// Output:

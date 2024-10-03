@@ -4,6 +4,6 @@ type Rule struct {
 	Id         any
 	Priority   int
 	Name       string
-	Event      Emmiter
+	Event      Event
 	Conditions []Condition
 }
