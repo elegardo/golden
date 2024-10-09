@@ -1,6 +1,4 @@
-package interfaces
-
-import "github.com/elegardo/golden/core/models"
+package models
 
 // # Given(..)
 //
@@ -38,7 +36,7 @@ import "github.com/elegardo/golden/core/models"
 //
 //	engine.When(facts).Given(rules).Run(callback)
 type Engine interface {
-	Given(rules []models.Rule) Engine
+	Given(rules []Rule) Engine
 	When(facts map[string]any) Engine
-	Run(callback models.Callback)
+	Run(callback Callback)
 }

@@ -6,14 +6,26 @@ import (
 	. "github.com/elegardo/golden/core/models"
 )
 
+var mockReturn int
+
+type mockComparable struct {
+}
+
+func (e *mockComparable) Compare(fact, value any) int {
+	return mockReturn
+}
+
 func TestEvaluator_Evaluate(t *testing.T) {
-	evaluator := Evaluator{}
+	evaluator := Evaluator{
+		Comparator: &mockComparable{},
+	}
 
 	tests := []struct {
 		name        string
 		fact        any
 		conditional Conditional
 		expected    bool
+		mock        int
 	}{
 		{
 			name: "Equal integers",
@@ -23,6 +35,7 @@ func TestEvaluator_Evaluate(t *testing.T) {
 				Value:    10,
 			},
 			expected: true,
+			mock:     0,
 		},
 		{
 			name: "Not Equal integers",
@@ -32,6 +45,7 @@ func TestEvaluator_Evaluate(t *testing.T) {
 				Value:    10,
 			},
 			expected: false,
+			mock:     1,
 		},
 		{
 			name: "GreaterThan integers",
@@ -41,6 +55,7 @@ func TestEvaluator_Evaluate(t *testing.T) {
 				Value:    5,
 			},
 			expected: true,
+			mock:     1,
 		},
 		{
 			name: "Not GreaterThan integers",
@@ -50,6 +65,7 @@ func TestEvaluator_Evaluate(t *testing.T) {
 				Value:    10,
 			},
 			expected: false,
+			mock:     -1,
 		},
 		{
 			name: "LessThan integers",
@@ -59,6 +75,7 @@ func TestEvaluator_Evaluate(t *testing.T) {
 				Value:    10,
 			},
 			expected: true,
+			mock:     -1,
 		},
 		{
 			name: "Not LessThan integers",
@@ -68,6 +85,7 @@ func TestEvaluator_Evaluate(t *testing.T) {
 				Value:    5,
 			},
 			expected: false,
+			mock:     1,
 		},
 		{
 			name: "Contains comparator",
@@ -81,6 +99,7 @@ func TestEvaluator_Evaluate(t *testing.T) {
 	}
 
 	for _, tt := range tests {
+		mockReturn = tt.mock
 		result := evaluator.Evaluate(tt.conditional.Operator, tt.fact, tt.conditional.Value)
 		if result != tt.expected {
 			t.Errorf("Evaluator.Evaluate() = %v, want %v", result, tt.expected)

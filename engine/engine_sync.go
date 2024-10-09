@@ -11,12 +11,12 @@ type SyncEngine struct {
 	facts  map[string]any
 }
 
-func (re *SyncEngine) Given(rules []models.Rule) interfaces.Engine {
+func (re *SyncEngine) Given(rules []models.Rule) models.Engine {
 	re.rules = rules
 	return re
 }
 
-func (re *SyncEngine) When(facts map[string]any) interfaces.Engine {
+func (re *SyncEngine) When(facts map[string]any) models.Engine {
 	re.facts = facts
 	return re
 }

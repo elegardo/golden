@@ -4,10 +4,12 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/elegardo/golden/core/interfaces"
 	"github.com/elegardo/golden/core/models"
 )
 
 type Evaluator struct {
+	Comparator interfaces.Comparable
 }
 
 func (e *Evaluator) Evaluate(operator models.Operator, fact, value any) bool {
@@ -39,7 +41,7 @@ func (e *Evaluator) Evaluate(operator models.Operator, fact, value any) bool {
 }
 
 func (e *Evaluator) compare(operator models.Operator, fact, value any) bool {
-	result := Compare(fact, value)
+	result := e.Comparator.Compare(fact, value)
 	switch operator {
 	case models.EQ:
 		return result == 0

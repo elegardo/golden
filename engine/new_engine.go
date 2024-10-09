@@ -3,6 +3,7 @@ package engine
 import (
 	"github.com/elegardo/golden/core"
 	"github.com/elegardo/golden/core/interfaces"
+	"github.com/elegardo/golden/core/models"
 )
 
 // TODO: implement CLI flags
@@ -13,7 +14,9 @@ import (
 func syncWorker() interfaces.Workereable {
 	return &core.Worker{
 		Matcher: &core.Matcher{
-			Evaluator: &core.Evaluator{},
+			Evaluator: &core.Evaluator{
+				Comparator: &models.Comparator{},
+			},
 		},
 	}
 }
@@ -24,14 +27,14 @@ func NewRunnerEngine(args ...string) interfaces.Runnable {
 	}
 }
 
-func NewAsyncEngine(args ...string) interfaces.Engine {
+func NewAsyncEngine(args ...string) models.Engine {
 	return &AsyncEngine{
 		Worker:  syncWorker(),
 		workers: 5,
 	}
 }
 
-func NewSyncEngine(args ...string) interfaces.Engine {
+func NewSyncEngine(args ...string) models.Engine {
 	return &SyncEngine{
 		Worker: syncWorker(),
 	}

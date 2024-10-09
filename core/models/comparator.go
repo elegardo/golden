@@ -1,6 +1,9 @@
-package core
+package models
 
-func Compare(fact, value any) int {
+type Comparator struct {
+}
+
+func (e *Comparator) Compare(fact, value any) int {
 	switch f := any(fact).(type) {
 	case int:
 		if f > any(value).(int) {

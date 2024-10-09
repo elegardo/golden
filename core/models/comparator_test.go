@@ -1,10 +1,12 @@
-package core
+package models
 
 import (
 	"testing"
 )
 
 func TestCompare(t *testing.T) {
+	comparator := Comparator{}
+
 	tests := []struct {
 		name     string
 		fact     any
@@ -50,7 +52,7 @@ func TestCompare(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		result := Compare(tt.fact, tt.value)
+		result := comparator.Compare(tt.fact, tt.value)
 		if result != tt.expected {
 			t.Errorf("Comparator.Compare() = %v, want %v", result, tt.expected)
 		}

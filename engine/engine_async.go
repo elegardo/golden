@@ -17,12 +17,12 @@ type AsyncEngine struct {
 	workers int
 }
 
-func (re *AsyncEngine) Given(rules []models.Rule) interfaces.Engine {
+func (re *AsyncEngine) Given(rules []models.Rule) models.Engine {
 	re.rules = rules
 	return re
 }
 
-func (re *AsyncEngine) When(facts map[string]any) interfaces.Engine {
+func (re *AsyncEngine) When(facts map[string]any) models.Engine {
 	re.facts = facts
 	return re
 }
