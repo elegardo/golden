@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	. "github.com/elegardo/golden/core/models"
-	. "github.com/elegardo/golden/engine"
+	. "github.com/elegardo/golden/factory"
 )
 
 type event struct {
