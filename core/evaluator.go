@@ -15,9 +15,9 @@ type Evaluator struct {
 func (e *Evaluator) Evaluate(operator models.Operator, fact, value any) bool {
 	switch operator {
 	case models.CO:
-		return Contains(fact, value)
+		return e.Comparator.Contains(fact, value)
 	case models.NC:
-		return !Contains(fact, value)
+		return !e.Comparator.Contains(fact, value)
 	case models.IN:
 		// TODO: print warning
 		if theyAreNotString(fact, value) {
