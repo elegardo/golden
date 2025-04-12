@@ -1,4 +1,4 @@
-package models
+package domain
 
 // Logical Gates
 // all	All conditions of rules are true

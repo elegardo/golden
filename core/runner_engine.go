@@ -1,15 +1,15 @@
 // Package con las funciones necesarias para la ejecucion de reglas
-package engine
+package core
 
 import (
 	"github.com/elegardo/golden/core/interfaces"
-	"github.com/elegardo/golden/core/models"
+	"github.com/elegardo/golden/core/domain"
 )
 
 type RunnerEngine struct {
-	Worker interfaces.Workereable
+	Worker interfaces.Worker
 }
 
-func (se *RunnerEngine) Run(rule models.Rule, facts map[string]any) bool {
+func (se *RunnerEngine) Run(rule domain.Rule, facts map[string]any) bool {
 	return se.Worker.Execute(rule, facts)
 }

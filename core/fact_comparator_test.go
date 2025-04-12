@@ -1,11 +1,11 @@
-package models
+package core
 
 import (
 	"testing"
 )
 
 func TestCompare(t *testing.T) {
-	comparator := Comparator{}
+	comparator := FactComparator{}
 
 	tests := []struct {
 		name     string

@@ -3,7 +3,7 @@ package engine
 import (
 	"fmt"
 
-	. "github.com/elegardo/golden/core/models"
+	. "github.com/elegardo/golden/core/domain"
 )
 
 var rules2 = []Rule{

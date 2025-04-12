@@ -1,11 +1,11 @@
-package models
+package core
 
 import "slices"
 
-type Comparator struct {
+type FactComparator struct {
 }
 
-func (e *Comparator) Compare(fact, value any) int {
+func (e *FactComparator) Compare(fact, value any) int {
 	switch f := any(fact).(type) {
 	case int:
 		if f > any(value).(int) {
@@ -33,7 +33,7 @@ func (e *Comparator) Compare(fact, value any) int {
 	}
 }
 
-func (e *Comparator) Contains(fact, value any) bool {
+func (e *FactComparator) Contains(fact, value any) bool {
 	switch x := any(value).(type) {
 	case interface{}:
 		switch array := x.(type) {

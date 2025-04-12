@@ -3,7 +3,7 @@ package core
 import (
 	"testing"
 
-	. "github.com/elegardo/golden/core/models"
+	. "github.com/elegardo/golden/core/domain"
 )
 
 var mockReturnInteger int
@@ -21,7 +21,7 @@ func (e *mockComparable) Contains(fact, value any) bool {
 }
 
 func TestEvaluator_Evaluate(t *testing.T) {
-	evaluator := Evaluator{
+	evaluator := RuleEvaluator{
 		Comparator: &mockComparable{},
 	}
 

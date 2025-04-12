@@ -1,4 +1,6 @@
-package models
+package interfaces
+
+import "github.com/elegardo/golden/core/domain"
 
 // # Given(..)
 //
@@ -36,7 +38,7 @@ package models
 //
 //	engine.When(facts).Given(rules).Run(callback)
 type Engine interface {
-	Given(rules []Rule) Engine
+	Given(rules []domain.Rule) Engine
 	When(facts map[string]any) Engine
-	Run(callback Callback)
+	Run(callback domain.Callback)
 }

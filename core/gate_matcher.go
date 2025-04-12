@@ -2,27 +2,27 @@ package core
 
 import (
 	"github.com/elegardo/golden/core/interfaces"
-	"github.com/elegardo/golden/core/models"
+	"github.com/elegardo/golden/core/domain"
 )
 
-type Matcher struct {
-	Evaluator interfaces.Evaluable
+type GateMatcher struct {
+	Evaluator interfaces.Evaluator
 }
 
-func (rm *Matcher) Execute(gate models.Gate, facts map[string]any, conditionals []models.Conditional) bool {
+func (rm *GateMatcher) Match(gate domain.Gate, facts map[string]any, conditionals []domain.Conditional) bool {
 	switch gate {
-	case models.ALL:
+	case domain.ALL:
 		return rm.allTrue(facts, conditionals)
-	case models.ANY:
+	case domain.ANY:
 		return rm.anyTrue(facts, conditionals)
-	case models.NONE:
+	case domain.NONE:
 		return rm.noneTrue(facts, conditionals)
 	default:
 		return false
 	}
 }
 
-func (rm *Matcher) allTrue(facts map[string]any, conditionals []models.Conditional) bool {
+func (rm *GateMatcher) allTrue(facts map[string]any, conditionals []domain.Conditional) bool {
 
 	allTrue := false
 
@@ -40,7 +40,7 @@ func (rm *Matcher) allTrue(facts map[string]any, conditionals []models.Condition
 	return allTrue
 }
 
-func (rm *Matcher) anyTrue(facts map[string]any, conditionals []models.Conditional) bool {
+func (rm *GateMatcher) anyTrue(facts map[string]any, conditionals []domain.Conditional) bool {
 
 	anyTrue := false
 
@@ -56,7 +56,7 @@ func (rm *Matcher) anyTrue(facts map[string]any, conditionals []models.Condition
 	return anyTrue
 }
 
-func (rm *Matcher) noneTrue(facts map[string]any, conditionals []models.Conditional) bool {
+func (rm *GateMatcher) noneTrue(facts map[string]any, conditionals []domain.Conditional) bool {
 
 	noneTrue := false
 

@@ -4,35 +4,35 @@ import (
 	"sync"
 
 	"github.com/elegardo/golden/core/interfaces"
-	"github.com/elegardo/golden/core/models"
+	"github.com/elegardo/golden/core/domain"
 )
 
 // Create a wait group to synchronize workers
 var wg sync.WaitGroup
 
 type AsyncEngine struct {
-	Worker  interfaces.Workereable
-	rules   []models.Rule
+	Worker  interfaces.Worker
+	rules   []domain.Rule
 	facts   map[string]any
 	workers int
 }
 
-func (re *AsyncEngine) Given(rules []models.Rule) models.Engine {
+func (re *AsyncEngine) Given(rules []domain.Rule) interfaces.Engine {
 	re.rules = rules
 	return re
 }
 
-func (re *AsyncEngine) When(facts map[string]any) models.Engine {
+func (re *AsyncEngine) When(facts map[string]any) interfaces.Engine {
 	re.facts = facts
 	return re
 }
 
-func (re *AsyncEngine) Run(callback models.Callback) {
+func (re *AsyncEngine) Run(callback domain.Callback) {
 	numJobs := len(re.rules)
 
 	// Create channels for jobs and results
-	jobs := make(chan models.Rule, numJobs)
-	results := make(chan models.Event, numJobs)
+	jobs := make(chan domain.Rule, numJobs)
+	results := make(chan domain.Event, numJobs)
 
 	// Launch worker goroutines
 	for i := 0; i < re.workers; i++ {
