@@ -12,31 +12,31 @@ type RuleEvaluator struct {
 	Comparator interfaces.Comparator
 }
 
-func (e *RuleEvaluator) Evaluate(operator domain.Operator, fact, value any) bool {
+func (e *RuleEvaluator) Evaluate(operator domain.Operator, factValue, conditionalValue any) bool {
 	switch operator {
 	case domain.CO:
-		return e.Comparator.Contains(fact, value)
+		return e.Comparator.Contains(factValue, conditionalValue)
 	case domain.NC:
-		return !e.Comparator.Contains(fact, value)
+		return !e.Comparator.Contains(factValue, conditionalValue)
 	case domain.IN:
 		// TODO: print warning
-		if theyAreNotString(fact, value) {
+		if theyAreNotString(factValue, conditionalValue) {
 			return false
 		}
-		return strings.Contains(any(fact).(string), any(value).(string))
+		return strings.Contains(any(factValue).(string), any(conditionalValue).(string))
 	case domain.NI:
 		// TODO: print warning
-		if theyAreNotString(fact, value) {
+		if theyAreNotString(factValue, conditionalValue) {
 			return false
 		}
-		return !strings.Contains(any(fact).(string), any(value).(string))
+		return !strings.Contains(any(factValue).(string), any(conditionalValue).(string))
 	default:
 		// different types cannot be compared
 		// TODO: print warning
-		if reflect.TypeOf(fact) != reflect.TypeOf(value) {
+		if reflect.TypeOf(factValue) != reflect.TypeOf(conditionalValue) {
 			return false
 		}
-		return e.compare(operator, fact, value)
+		return e.compare(operator, factValue, conditionalValue)
 	}
 }
 
