@@ -28,7 +28,8 @@ func (rm *GateMatcher) allTrue(facts map[string]any, conditionals []domain.Condi
 
 	for _, conditional := range conditionals {
 		if factValue, exists := facts[conditional.Fact]; exists {
-			if rm.Evaluator.Evaluate(conditional.Operator, factValue, conditional.Value) {
+			pair := domain.NewPair(factValue, conditional.Value)
+			if rm.Evaluator.Evaluate(conditional.Operator, pair) {
 				allTrue = true
 			} else {
 				allTrue = false
@@ -46,7 +47,8 @@ func (rm *GateMatcher) anyTrue(facts map[string]any, conditionals []domain.Condi
 
 	for _, conditional := range conditionals {
 		if factValue, exists := facts[conditional.Fact]; exists {
-			if rm.Evaluator.Evaluate(conditional.Operator, factValue, conditional.Value) {
+			pair := domain.NewPair(factValue, conditional.Value)
+			if rm.Evaluator.Evaluate(conditional.Operator, pair) {
 				anyTrue = true
 				break
 			}
@@ -62,7 +64,8 @@ func (rm *GateMatcher) noneTrue(facts map[string]any, conditionals []domain.Cond
 
 	for _, conditional := range conditionals {
 		if factValue, exists := facts[conditional.Fact]; exists {
-			if rm.Evaluator.Evaluate(conditional.Operator, factValue, conditional.Value) {
+			pair := domain.NewPair(factValue, conditional.Value)
+			if rm.Evaluator.Evaluate(conditional.Operator, pair) {
 				noneTrue = false
 				break
 			} else {

@@ -12,11 +12,11 @@ var mockReturnBool bool
 type mockComparable struct {
 }
 
-func (e *mockComparable) Compare(fact, value any) int {
+func (e *mockComparable) Compare(pair *Pair) int {
 	return mockReturnInteger
 }
 
-func (e *mockComparable) Contains(fact, value any) bool {
+func (e *mockComparable) Contains(pair *Pair) bool {
 	return mockReturnBool
 }
 
@@ -105,7 +105,8 @@ func TestEvaluator_Evaluate(t *testing.T) {
 
 	for _, tt := range tests {
 		mockReturnInteger = tt.mockInt
-		result := evaluator.Evaluate(tt.conditional.Operator, tt.fact, tt.conditional.Value)
+		pair := NewPair(tt.fact, tt.conditional.Value)
+		result := evaluator.Evaluate(tt.conditional.Operator, pair)
 		if result != tt.expected {
 			t.Errorf("Evaluator.Evaluate() = %v, want %v", result, tt.expected)
 		}

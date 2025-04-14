@@ -2,6 +2,8 @@ package core
 
 import (
 	"testing"
+
+	. "github.com/elegardo/golden/core/domain"
 )
 
 func TestCompare(t *testing.T) {
@@ -52,7 +54,8 @@ func TestCompare(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		result := comparator.Compare(tt.fact, tt.value)
+		pair := NewPair(tt.fact, tt.value)
+		result := comparator.Compare(pair)
 		if result != tt.expected {
 			t.Errorf("Comparator.Compare() = %v, want %v", result, tt.expected)
 		}

@@ -1,30 +1,34 @@
 package core
 
-import "slices"
+import (
+	"slices"
+
+	"github.com/elegardo/golden/core/domain"
+)
 
 type FactComparator struct {
 }
 
-func (e *FactComparator) Compare(fact, value any) int {
-	switch f := any(fact).(type) {
+func (e *FactComparator) Compare(pair *domain.Pair) int {
+	switch value1 := any(pair.Value1).(type) {
 	case int:
-		if f > any(value).(int) {
+		if value1 > pair.GetInt2() {
 			return 1
-		} else if f < any(value).(int) {
+		} else if value1 < pair.GetInt2() {
 			return -1
 		}
 		return 0
 	case string:
-		if f > any(value).(string) {
+		if value1 > pair.GetString2() {
 			return 1
-		} else if f < any(value).(string) {
+		} else if value1 < pair.GetString2() {
 			return -1
 		}
 		return 0
 	case bool:
-		if f && !any(value).(bool) {
+		if value1 && !pair.GetBool2() {
 			return 1
-		} else if !f && any(value).(bool) {
+		} else if !value1 && pair.GetBool2() {
 			return -1
 		}
 		return 0
@@ -33,14 +37,14 @@ func (e *FactComparator) Compare(fact, value any) int {
 	}
 }
 
-func (e *FactComparator) Contains(fact, value any) bool {
-	switch x := any(value).(type) {
+func (e *FactComparator) Contains(pair *domain.Pair) bool {
+	switch value2 := any(pair.Value2).(type) {
 	case interface{}:
-		switch array := x.(type) {
+		switch array := value2.(type) {
 		case []string:
-			return slices.Contains(array, any(fact).(string))
+			return slices.Contains(array, pair.GetString1())
 		case []int:
-			return slices.Contains(array, any(fact).(int))
+			return slices.Contains(array, pair.GetInt1())
 		default:
 			panic("unsupported type for contains")
 		}

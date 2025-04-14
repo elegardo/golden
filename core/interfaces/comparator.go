@@ -1,6 +1,8 @@
 package interfaces
 
+import "github.com/elegardo/golden/core/domain"
+
 type Comparator interface {
-	Compare(fact, value any) int
-	Contains(fact, value any) bool
+	Compare(pair *domain.Pair) int
+	Contains(pair *domain.Pair) bool
 }

@@ -1,7 +1,6 @@
 package core
 
 import (
-	"reflect"
 	"strings"
 
 	"github.com/elegardo/golden/core/interfaces"
@@ -12,36 +11,36 @@ type RuleEvaluator struct {
 	Comparator interfaces.Comparator
 }
 
-func (e *RuleEvaluator) Evaluate(operator domain.Operator, factValue, conditionalValue any) bool {
+func (e *RuleEvaluator) Evaluate(operator domain.Operator, pair *domain.Pair) bool {
 	switch operator {
 	case domain.CO:
-		return e.Comparator.Contains(factValue, conditionalValue)
+		return e.Comparator.Contains(pair)
 	case domain.NC:
-		return !e.Comparator.Contains(factValue, conditionalValue)
+		return !e.Comparator.Contains(pair)
 	case domain.IN:
 		// TODO: print warning
-		if theyAreNotString(factValue, conditionalValue) {
+		if !pair.AreString() {
 			return false
 		}
-		return strings.Contains(any(factValue).(string), any(conditionalValue).(string))
+		return strings.Contains(pair.GetString1(), pair.GetString2())
 	case domain.NI:
 		// TODO: print warning
-		if theyAreNotString(factValue, conditionalValue) {
+		if !pair.AreString() {
 			return false
 		}
-		return !strings.Contains(any(factValue).(string), any(conditionalValue).(string))
+		return !strings.Contains(pair.GetString1(), pair.GetString2())
 	default:
 		// different types cannot be compared
 		// TODO: print warning
-		if reflect.TypeOf(factValue) != reflect.TypeOf(conditionalValue) {
+		if !pair.AreSameType() {
 			return false
 		}
-		return e.compare(operator, factValue, conditionalValue)
+		return e.compare(operator, pair)
 	}
 }
 
-func (e *RuleEvaluator) compare(operator domain.Operator, fact, value any) bool {
-	result := e.Comparator.Compare(fact, value)
+func (e *RuleEvaluator) compare(operator domain.Operator, pair *domain.Pair) bool {
+	result := e.Comparator.Compare(pair)
 	switch operator {
 	case domain.EQ:
 		return result == 0
@@ -58,8 +57,4 @@ func (e *RuleEvaluator) compare(operator domain.Operator, fact, value any) bool 
 	default:
 		panic("unsupported comparator")
 	}
-}
-
-func theyAreNotString(fact, value any) bool {
-	return reflect.TypeOf(fact).String() != "string" || reflect.TypeOf(value).String() != "string"
 }
